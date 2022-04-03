@@ -6,10 +6,10 @@ export const GridGuesses = ({ guesses }) => (
           <li
             key={index}
             className={`
-              w-8 h-8 leading-8 text-center text-sm font-bold bg-gray-100 rounded
-              ${correct && "bg-green-500 text-white"}
-              ${!correct && included && "bg-orange-500 text-white"}
-              ${!correct && !included && "bg-red-500 text-white"}
+              w-10 h-10 leading-10 shrink-0 text-center text-sm font-medium bg-gray-700 rounded-sm
+              ${correct && "bg-green-700 text-white"}
+              ${!correct && included && "bg-orange-700 text-white"}
+              ${!correct && !included && "bg-red-700 text-white"}
             `}
           >
             {letter}

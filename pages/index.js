@@ -73,26 +73,26 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col justify-between h-screen max-w-2xl p-8 mx-auto space-y-8">
+    <div className="flex flex-col justify-between h-screen p-4">
       <div>
         <Header count={classNames.length} />
 
-        <div className="mt-8 space-y-1">
-          <GridPlaceholder rows={5 - guesses.length} squares={word.split("")} />
+        <div className="mt-8 space-y-1 overflow-auto">
           <GridGuesses guesses={guesses} />
+          <GridPlaceholder rows={5 - guesses.length} squares={word.split("")} />
         </div>
 
         <div className="mt-4 text-center">
           <button
-            className="p-3 mx-auto text-sm bg-gray-100 rounded-lg"
+            className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
             onClick={restartGame}
           >
-            New Word
+            New Class Name
           </button>
         </div>
       </div>
 
-      <div>
+      <div className="w-full max-w-2xl mx-auto">
         {error && <p className="text-center text-red-500">{error}</p>}
 
         {win && <ResultWin handleRestartGame={() => restartGame()} />}
@@ -106,12 +106,12 @@ export default function Home() {
             e.preventDefault();
             checkGuess();
           }}
-          className="pt-8 mt-8 border-t border-gray-100"
+          className="pt-8 mt-8 border-t border-gray-800"
         >
           <fieldset className="flex gap-4" disabled={win || lost}>
             <div className="relative flex-1">
               <input
-                className="w-full py-3 pl-3 pr-12 text-sm border rounded-lg"
+                className="w-full py-3 pl-3 pr-12 text-sm bg-gray-800 border border-gray-700 rounded-lg"
                 value={guess}
                 onChange={(e) => setGuess(e.target.value)}
                 placeholder="Enter guess"
@@ -125,10 +125,10 @@ export default function Home() {
             </div>
 
             <button
-              className="p-3 text-sm bg-gray-100 rounded-lg"
+              className="p-3 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
               type="submit"
             >
-              Submit
+              Submit Guess
             </button>
           </fieldset>
         </form>
