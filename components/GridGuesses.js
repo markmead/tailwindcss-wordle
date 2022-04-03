@@ -7,9 +7,9 @@ export const GridGuesses = ({ guesses }) => (
             key={index}
             className={`
               w-10 h-10 leading-10 shrink-0 text-center text-sm font-medium bg-gray-700 rounded-sm
-              ${correct && "bg-green-700 text-white"}
-              ${!correct && included && "bg-orange-700 text-white"}
-              ${!correct && !included && "bg-red-700 text-white"}
+              ${correct && "bg-green-600 text-white"}
+              ${!correct && included && "bg-yellow-600 text-white"}
+              ${!correct && !included && "bg-red-600 text-white"}
             `}
           >
             {letter}

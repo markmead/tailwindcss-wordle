@@ -17,6 +17,8 @@ export default function Home() {
   let [lost, setLost] = useState(null);
   let [error, setError] = useState("");
 
+  let classCount = tailwindClasses.length;
+
   useEffect(() => {
     setClassNames(tailwindClasses);
 
@@ -73,66 +75,71 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col justify-between h-screen p-4">
-      <div>
-        <Header count={classNames.length} />
+    <section className="relative py-8 space-y-8">
+      <article className="text-center">
+        <p>
+          Can you guess the Tailwind CSS class name from {classCount} options.
+        </p>
+      </article>
 
-        <div className="mt-8 space-y-1 overflow-auto">
-          <GridGuesses guesses={guesses} />
-          <GridPlaceholder rows={5 - guesses.length} squares={word.split("")} />
-        </div>
+      <div className="space-y-1 overflow-auto">
+        <GridGuesses guesses={guesses} />
 
-        <div className="mt-4 text-center">
-          <button
-            className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
-            onClick={restartGame}
-          >
-            New Class Name
-          </button>
-        </div>
+        <GridPlaceholder rows={5 - guesses.length} squares={word.split("")} />
       </div>
 
-      <div className="w-full max-w-2xl mx-auto">
-        {error && <p className="text-center text-red-500">{error}</p>}
-
-        {win && <ResultWin handleRestartGame={() => restartGame()} />}
-
-        {lost && (
-          <ResultLost handleRestartGame={() => restartGame()} word={word} />
-        )}
-
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            checkGuess();
-          }}
-          className="pt-8 mt-8 border-t border-gray-800"
+      <div className="text-center">
+        <button
+          className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
+          onClick={restartGame}
         >
-          <fieldset className="flex gap-4" disabled={win || lost}>
-            <div className="relative flex-1">
-              <input
-                className="w-full py-3 pl-3 pr-12 text-sm bg-gray-800 border border-gray-700 rounded-lg"
-                value={guess}
-                onChange={(e) => setGuess(e.target.value)}
-                placeholder="Enter guess"
-                min={word.length}
-                max={word.length}
-              />
-
-              <span className="absolute text-xs -translate-y-1/2 right-3 top-1/2">
-                {guess.length}/{word.length}
-              </span>
-            </div>
-
-            <button
-              className="p-3 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
-              type="submit"
-            >
-              Submit Guess
-            </button>
-          </fieldset>
-        </form>
+          New Class Name
+        </button>
       </div>
-    </div>
+
+      <div className="fixed inset-x-0 bottom-0 pb-8">
+        <div className="max-w-xl px-4 mx-auto">
+          {error && <p className="text-center text-red-500">{error}</p>}
+
+          {win && <ResultWin handleRestartGame={() => restartGame()} />}
+
+          {lost && (
+            <ResultLost handleRestartGame={() => restartGame()} word={word} />
+          )}
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              checkGuess();
+            }}
+            className="pt-8 mt-8 border-t border-gray-800"
+          >
+            <fieldset className="flex gap-4" disabled={win || lost}>
+              <div className="relative flex-1">
+                <input
+                  className="w-full py-3 pl-3 pr-12 text-sm bg-gray-800 border border-gray-700 rounded-lg"
+                  value={guess}
+                  onChange={(e) => setGuess(e.target.value)}
+                  placeholder="Enter guess"
+                  min={word.length}
+                  max={word.length}
+                />
+
+                <span className="absolute text-xs -translate-y-1/2 right-3 top-1/2">
+                  {guess.length}/{word.length}
+                </span>
+              </div>
+
+              <button
+                className="p-3 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
+                type="submit"
+              >
+                Submit Guess
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </section>
   );
 }

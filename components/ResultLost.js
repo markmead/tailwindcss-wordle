@@ -5,7 +5,7 @@ export const ResultLost = ({ handleRestartGame, word }) => (
     <p className="text-sm">The correct class name was {word}</p>
 
     <button
-      className="p-3 mt-4 text-sm bg-gray-100 rounded-lg"
+      className="p-3 mt-4 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
       onClick={handleRestartGame}
     >
       Play Again
