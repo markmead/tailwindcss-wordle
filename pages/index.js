@@ -77,7 +77,8 @@ export default function Home() {
     <section className="relative py-8 space-y-8">
       <article className="text-center">
         <p>
-          Can you guess the Tailwind CSS class name from {classCount} options.
+          Can you guess the Tailwind CSS
+          <br className="sm:hidden" /> class name from {classCount} options?
         </p>
       </article>
 
