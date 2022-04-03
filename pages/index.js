@@ -113,7 +113,10 @@ export default function Home() {
             }}
             className="pt-8 mt-8 border-t border-gray-800"
           >
-            <fieldset className="flex gap-4" disabled={win || lost}>
+            <fieldset
+              className="flex gap-4 disabled:opacity-50 disabled:pointer-events-none"
+              disabled={win || lost}
+            >
               <div className="relative flex-1">
                 <input
                   className="w-full py-3 pl-3 pr-12 text-sm bg-gray-800 border border-gray-700 rounded-lg"
