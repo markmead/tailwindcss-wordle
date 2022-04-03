@@ -118,7 +118,7 @@ export default function Home() {
                 <input
                   className="w-full py-3 pl-3 pr-12 text-sm bg-gray-800 border border-gray-700 rounded-lg"
                   value={guess}
-                  onChange={(e) => setGuess(e.target.value)}
+                  onChange={(e) => setGuess(e.target.value.toLowerCase())}
                   placeholder="Enter guess"
                   min={word.length}
                   max={word.length}
