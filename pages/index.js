@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { tailwindClasses } from "../lib/tailwind";
 
-import { Header } from "../components/Header";
 import { GridPlaceholder } from "../components/GridPlaceholder";
 import { GridGuesses } from "../components/GridGuesses";
 import { ResultWin } from "../components/ResultWin";
