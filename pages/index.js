@@ -88,13 +88,22 @@ export default function Home() {
         <GridPlaceholder rows={5 - guesses.length} squares={word.split("")} />
       </div>
 
-      <div className="text-center">
+      <div className="flex justify-center gap-4">
         <button
           className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
           onClick={restartGame}
         >
           New Class Name
         </button>
+
+        <a
+          className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
+          href="https://youtu.be/dQw4w9WgXcQ"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Add 5 Guesses
+        </a>
       </div>
 
       <div className="fixed inset-x-0 bottom-0 py-8 bg-gray-900">
