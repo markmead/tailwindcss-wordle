@@ -8,24 +8,24 @@ import { Header } from "../components/Header";
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-4HQZYDVZ32"
-      ></script>
+      <Head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-4HQZYDVZ32"
+        ></script>
 
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
             gtag('config', 'G-4HQZYDVZ32');
           `,
-        }}
-      />
+          }}
+        />
 
-      <Head>
         <title>Tailwind CSS Wordle | HyperUI</title>
         <meta
           name="description"
