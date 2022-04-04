@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }) {
         <title>Tailwind CSS Wordle | HyperUI</title>
         <meta
           name="description"
-          content="Guess from over 6000 Tailwind CSS class names. It's Wordle for Tailwind CSS."
+          content="Wordle meets Tailwind CSS! Guess from over 6000 Tailwind CSS class names."
           key="description"
         />
       </Head>
