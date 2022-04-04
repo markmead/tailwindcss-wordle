@@ -97,7 +97,7 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 pb-8">
+      <div className="fixed inset-x-0 bottom-0 py-8 bg-gray-900">
         <div className="max-w-xl px-4 mx-auto">
           {error && <p className="text-center text-red-500">{error}</p>}
 

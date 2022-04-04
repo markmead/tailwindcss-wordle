@@ -1,7 +1,7 @@
 export const GridPlaceholder = ({ rows, squares }) => (
   <div className="space-y-1">
     {Array.from(Array(rows).fill("")).map((_, index) => (
-      <div key={index} className="flex justify-center gap-1">
+      <div key={index} className="flex gap-1 sm:justify-center">
         {squares.map((_, index) => (
           <div
             key={index}

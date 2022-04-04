@@ -1,7 +1,7 @@
 export const GridGuesses = ({ guesses }) => (
   <div className="space-y-1">
     {guesses.map((guess, index) => (
-      <ul className="flex justify-center gap-1" key={index}>
+      <ul className="flex gap-1 sm:justify-center" key={index}>
         {guess.map(({ letter, correct, included }, index) => (
           <li
             key={index}
