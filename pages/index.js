@@ -8,7 +8,7 @@ import { ResultWin } from "../components/ResultWin";
 import { ResultLost } from "../components/ResultLost";
 import { GameShared } from "../components/GameShared";
 
-import { fromHex, toHex } from "../utils/ecoder";
+import { fromHex, toHex } from "../utils/encoder";
 
 export default function Home() {
   let [classNames, setClassNames] = useState([]);

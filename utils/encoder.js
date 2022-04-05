@@ -1,7 +1,9 @@
+// This is trash code 🗑
+
 export function fromHex(stringAsHex) {
   let newString = "";
 
-  for (var i = 0; i < stringAsHex.length; i += 2) {
+  for (let i = 0; i < stringAsHex.length; i += 2) {
     newString += String.fromCharCode(parseInt(stringAsHex.substr(i, 2), 16));
   }
 
@@ -9,10 +11,10 @@ export function fromHex(stringAsHex) {
 }
 
 export function toHex(stringToEncode) {
-  let newString = unescape(encodeURIComponent(stringToEncode));
+  let newString = encodeURIComponent(stringToEncode);
   let stringHex = "";
 
-  for (var i = 0; i < newString.length; i++) {
+  for (let i = 0; i < newString.length; i++) {
     stringHex += newString.charCodeAt(i).toString(16);
   }
 
