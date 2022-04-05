@@ -6,6 +6,9 @@ import { GridPlaceholder } from "../components/GridPlaceholder";
 import { GridGuesses } from "../components/GridGuesses";
 import { ResultWin } from "../components/ResultWin";
 import { ResultLost } from "../components/ResultLost";
+import { GameShared } from "../components/GameShared";
+
+import { fromHex, toHex } from "../utils/ecoder";
 
 export default function Home() {
   let [classNames, setClassNames] = useState([]);
@@ -15,11 +18,23 @@ export default function Home() {
   let [win, setWin] = useState(null);
   let [lost, setLost] = useState(null);
   let [error, setError] = useState("");
+  let [shared, setShared] = useState(false);
 
   let classCount = tailwindClasses.length;
 
   useEffect(() => {
     setClassNames(tailwindClasses);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedWord = urlParams.get("word");
+
+    if (sharedWord) {
+      const decodedWord = fromHex(sharedWord);
+
+      setWord(decodedWord);
+
+      return;
+    }
 
     const randomClassName =
       tailwindClasses[Math.floor(Math.random() * tailwindClasses.length)];
@@ -73,6 +88,17 @@ export default function Home() {
     setLost(null);
   }
 
+  function shareGame() {
+    const encodedWord = toHex(word);
+    const shareUrl = `${window.location.href}?word=${encodedWord}`;
+
+    navigator.clipboard.writeText(shareUrl);
+
+    setShared(true);
+
+    setTimeout(() => setShared(false), 3000);
+  }
+
   return (
     <section className="relative py-8 space-y-8">
       <article className="text-center">
@@ -88,14 +114,23 @@ export default function Home() {
         <GridPlaceholder rows={5 - guesses.length} squares={word.split("")} />
       </div>
 
-      <div className="text-center">
+      <div className="flex justify-center gap-4">
         <button
           className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
           onClick={restartGame}
         >
           New Class Name
         </button>
+
+        <button
+          className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
+          onClick={shareGame}
+        >
+          Play With a Friend
+        </button>
       </div>
+
+      {shared && <GameShared />}
 
       <div className="fixed inset-x-0 bottom-0 py-8 bg-gray-900">
         <div className="max-w-xl px-4 mx-auto">
