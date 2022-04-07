@@ -24,7 +24,10 @@ export default function Home() {
   useEffect(() => {
     newGame();
 
-    document.addEventListener("refreshGame", () => newGame());
+    document.addEventListener("refreshGame", () => {
+      restartGame();
+      newGame();
+    });
   }, []);
 
   function newGame() {
@@ -68,14 +71,14 @@ export default function Home() {
   function checkGuess() {
     setError("");
 
-    if (!classNames.includes(guess)) {
-      setError("Class name not in the list");
+    if (guess.length !== word.length) {
+      setError(`Class name must be ${word.length} characters long`);
 
       return;
     }
 
-    if (guess.length !== word.length) {
-      setError(`Class name must be ${word.length} characters long`);
+    if (!classNames.includes(guess)) {
+      setError("Class name not in the list");
 
       return;
     }
@@ -103,7 +106,7 @@ export default function Home() {
 
   function restartGame() {
     const randomClassName =
-      tailwindClasses[Math.floor(Math.random() * tailwindClasses.length)];
+      classNames[Math.floor(Math.random() * classNames.length)];
 
     setWord(randomClassName);
     setGuesses([]);

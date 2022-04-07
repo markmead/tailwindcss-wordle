@@ -43,6 +43,8 @@ export const Settings = () => {
     const customEvent = new Event("refreshGame");
 
     document.dispatchEvent(customEvent);
+
+    setOpen(false);
   }
 
   return (
