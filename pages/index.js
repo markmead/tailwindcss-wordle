@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { tailwindClasses } from "../lib/tailwind";
+import { tailwindClasses, tailwindPluginClasses } from "../lib/tailwind";
 
 import { GridPlaceholder } from "../components/GridPlaceholder";
 import { GridGuesses } from "../components/GridGuesses";
@@ -19,11 +19,37 @@ export default function Home() {
   let [lost, setLost] = useState(null);
   let [error, setError] = useState("");
   let [shared, setShared] = useState(false);
-
-  let classCount = tailwindClasses.length;
+  let [count, setCount] = useState(0);
 
   useEffect(() => {
-    setClassNames(tailwindClasses);
+    newGame();
+
+    document.addEventListener("refreshGame", () => {
+      restartGame();
+      newGame();
+    });
+  }, []);
+
+  function newGame() {
+    const usePlugins = JSON.parse(localStorage.getItem("usePlugins"));
+    const minLength = Number(localStorage.getItem("minLength")) || 3;
+    const maxLength = Number(localStorage.getItem("maxLength")) || 25;
+
+    let twClassNames = [];
+
+    twClassNames = usePlugins
+      ? [...tailwindClasses, ...tailwindPluginClasses]
+      : tailwindClasses;
+
+    twClassNames = maxLength
+      ? twClassNames.filter(
+          (className) =>
+            className.length >= minLength && className.length <= maxLength
+        )
+      : twClassNames;
+
+    setClassNames(twClassNames);
+    setCount(twClassNames.length);
 
     const urlParams = new URLSearchParams(window.location.search);
     const sharedWord = urlParams.get("word");
@@ -37,22 +63,22 @@ export default function Home() {
     }
 
     const randomClassName =
-      tailwindClasses[Math.floor(Math.random() * tailwindClasses.length)];
+      twClassNames[Math.floor(Math.random() * twClassNames.length)];
 
     setWord(randomClassName);
-  }, []);
+  }
 
   function checkGuess() {
     setError("");
 
-    if (!classNames.includes(guess)) {
-      setError("Class name not in the list");
+    if (guess.length !== word.length) {
+      setError(`Class name must be ${word.length} characters long`);
 
       return;
     }
 
-    if (guess.length !== word.length) {
-      setError(`Class name must be ${word.length} characters long`);
+    if (!classNames.includes(guess)) {
+      setError("Class name not in the list");
 
       return;
     }
@@ -80,7 +106,7 @@ export default function Home() {
 
   function restartGame() {
     const randomClassName =
-      tailwindClasses[Math.floor(Math.random() * tailwindClasses.length)];
+      classNames[Math.floor(Math.random() * classNames.length)];
 
     setWord(randomClassName);
     setGuesses([]);
@@ -104,7 +130,7 @@ export default function Home() {
       <article className="text-center">
         <p>
           Can you guess the Tailwind CSS
-          <br className="sm:hidden" /> class name from {classCount} options?
+          <br className="sm:hidden" /> class name from {count} options?
         </p>
       </article>
 
