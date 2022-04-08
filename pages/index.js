@@ -83,7 +83,13 @@ export default function Home() {
       return;
     }
 
-    if (!classNames.includes(guess)) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedWord = urlParams.get("word");
+    const checkableClassNames = sharedWord
+      ? [...tailwindClasses, ...tailwindPluginClasses]
+      : classNames;
+
+    if (!checkableClassNames.includes(guess)) {
       setError("Class name not in the list");
 
       return;
