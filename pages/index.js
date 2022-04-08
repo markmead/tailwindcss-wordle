@@ -28,6 +28,11 @@ export default function Home() {
     document.addEventListener("refreshGame", () => {
       restartGame();
       newGame();
+
+      const urlParams = new URLSearchParams(window.location.search);
+
+      urlParams.delete("word");
+      window.history.pushState(null, null, `?${urlParams.toString()}`);
     });
   }, []);
 
@@ -127,6 +132,7 @@ export default function Home() {
     setGuesses([]);
     setWin(null);
     setLost(null);
+    setColor("");
   }
 
   function shareGame() {
