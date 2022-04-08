@@ -20,11 +20,17 @@ export default function Home() {
   let [error, setError] = useState("");
   let [shared, setShared] = useState(false);
   let [count, setCount] = useState(0);
+  let [color, setColor] = useState("");
 
   useEffect(() => {
     newGame();
 
     document.addEventListener("refreshGame", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+
+      urlParams.delete("word");
+      window.history.pushState(null, null, `?${urlParams.toString()}`);
+
       restartGame();
       newGame();
     });
@@ -77,7 +83,13 @@ export default function Home() {
       return;
     }
 
-    if (!classNames.includes(guess)) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedWord = urlParams.get("word");
+    const checkableClassNames = sharedWord
+      ? [...tailwindClasses, ...tailwindPluginClasses]
+      : classNames;
+
+    if (!checkableClassNames.includes(guess)) {
       setError("Class name not in the list");
 
       return;
@@ -93,6 +105,20 @@ export default function Home() {
         included: wordArray.includes(letter),
       };
     });
+
+    const includedLettersCount = guessResult.filter(
+      (result) => result.included
+    ).length;
+    const isColorClass = guess.includes("00");
+    const isLastLetter = includedLettersCount === guessResult.length - 1;
+
+    if (isLastLetter && isColorClass) {
+      const excludedLetterIndex = guessResult.findIndex(
+        (result) => !result.included
+      );
+
+      setColor(word[excludedLetterIndex]);
+    }
 
     const newGuesses = [...guesses, guessResult];
 
@@ -112,6 +138,7 @@ export default function Home() {
     setGuesses([]);
     setWin(null);
     setLost(null);
+    setColor("");
   }
 
   function shareGame() {
@@ -123,6 +150,21 @@ export default function Home() {
     setShared(true);
 
     setTimeout(() => setShared(false), 3000);
+  }
+
+  function answerGame() {
+    const lastGuess = guesses[guesses.length - 1];
+    const lastGuessArray = lastGuess.map((result) => result.letter);
+
+    const wrongLetter = lastGuessArray.find(
+      (_, index) => index === lastGuessArray.length - 3
+    );
+
+    const correctGuess = lastGuessArray
+      .map((letter) => (letter === wrongLetter ? color : letter))
+      .join("");
+
+    setGuess(correctGuess);
   }
 
   return (
@@ -154,6 +196,15 @@ export default function Home() {
         >
           Play With a Friend
         </button>
+
+        {color && (
+          <button
+            className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
+            onClick={answerGame}
+          >
+            Finish Class Name
+          </button>
+        )}
       </div>
 
       {shared && <GameShared />}
