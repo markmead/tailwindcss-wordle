@@ -20,6 +20,7 @@ export default function Home() {
   let [error, setError] = useState("");
   let [shared, setShared] = useState(false);
   let [count, setCount] = useState(0);
+  let [color, setColor] = useState("");
 
   useEffect(() => {
     newGame();
@@ -94,6 +95,20 @@ export default function Home() {
       };
     });
 
+    const includedLettersCount = guessResult.filter(
+      (result) => result.included
+    ).length;
+    const isColorClass = guess.includes("00");
+    const isLastLetter = includedLettersCount === guessResult.length - 1;
+
+    if (isLastLetter && isColorClass) {
+      const excludedLetterIndex = guessResult.findIndex(
+        (result) => !result.included
+      );
+
+      setColor(word[excludedLetterIndex]);
+    }
+
     const newGuesses = [...guesses, guessResult];
 
     setGuesses(newGuesses);
@@ -125,6 +140,21 @@ export default function Home() {
     setTimeout(() => setShared(false), 3000);
   }
 
+  function answerGame() {
+    const lastGuess = guesses[guesses.length - 1];
+    const lastGuessArray = lastGuess.map((result) => result.letter);
+
+    const wrongLetter = lastGuessArray.find(
+      (_, index) => index === lastGuessArray.length - 3
+    );
+
+    const correctGuess = lastGuessArray
+      .map((letter) => (letter === wrongLetter ? color : letter))
+      .join("");
+
+    setGuess(correctGuess);
+  }
+
   return (
     <section className="relative py-8 space-y-8">
       <article className="text-center">
@@ -154,6 +184,15 @@ export default function Home() {
         >
           Play With a Friend
         </button>
+
+        {color && (
+          <button
+            className="p-3 text-sm text-white bg-gray-800 rounded-lg hover:text-gray-300"
+            onClick={answerGame}
+          >
+            Finish Class Name
+          </button>
+        )}
       </div>
 
       {shared && <GameShared />}
