@@ -26,13 +26,13 @@ export default function Home() {
     newGame();
 
     document.addEventListener("refreshGame", () => {
-      restartGame();
-      newGame();
-
       const urlParams = new URLSearchParams(window.location.search);
 
       urlParams.delete("word");
       window.history.pushState(null, null, `?${urlParams.toString()}`);
+
+      restartGame();
+      newGame();
     });
   }, []);
 
