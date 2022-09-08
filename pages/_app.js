@@ -1,31 +1,14 @@
-import "../styles/globals.css";
+import '../styles/globals.css'
 
-import Head from "next/head";
+import Head from 'next/head'
 
-import { Layout } from "../components/Layout";
-import { Header } from "../components/Header";
+import { Layout } from '../components/Layout'
+import { Header } from '../components/Header'
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-4HQZYDVZ32"
-        ></script>
-
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-4HQZYDVZ32');
-          `,
-          }}
-        />
-
         <title>Tailwind CSS Wordle | HyperUI</title>
         <meta
           name="description"
@@ -39,7 +22,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
     </>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
